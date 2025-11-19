@@ -1,13 +1,16 @@
 [workspace]
+members = [
+    "activity-sleepy",
+    "workflow-tutorial",
+]
 resolver = "2"
-members = ["activity-sleepy"]
 
 [workspace.package]
 version = "0.1.0"
-license = "MIT"
 authors = ["Project Developers"]
-edition = "2024"
+license = "MIT"
 repository = "TBD"
+edition = "2024"
 rust-version = "1.90.0"
 
 [workspace.dependencies]
