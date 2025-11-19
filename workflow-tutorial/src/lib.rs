@@ -1,5 +1,9 @@
 use exports::tutorial::workflow::workflow::Guest;
-use obelisk::workflow::workflow_support::{ClosingStrategy, new_join_set_generated};
+use obelisk::{
+    log::log,
+    types::time::{Duration, ScheduleAt},
+    workflow::workflow_support::{self, ClosingStrategy, new_join_set_generated},
+};
 use tutorial::{
     activity::activity_sleepy::step,
     activity_obelisk_ext::activity_sleepy::{step_await_next, step_submit},
@@ -12,9 +16,15 @@ export!(Component);
 
 impl Guest for Component {
     fn serial(iterations: u64) -> Result<(), ()> {
+        log::info("serial started");
         for i in 0..iterations {
-            step(i, i * 200).unwrap();
+            log::info("Persistent sleep started");
+            workflow_support::sleep(ScheduleAt::In(Duration::Seconds(1)));
+            log::info("Persistent sleep finished");
+            let result = step(i, i * 200).unwrap();
+            log::info(&format!("Step succeeded {i}=={result}"));
         }
+        log::info("serial completed");
         Ok(())
     }
 

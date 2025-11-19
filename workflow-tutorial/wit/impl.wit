@@ -8,4 +8,6 @@ world any {
     import tutorial:activity-obelisk-ext/activity-sleepy;
     import obelisk:types/execution@3.0.0;
     import obelisk:workflow/workflow-support@3.0.0;
+
+    import obelisk:log/log@1.0.0;
 }
