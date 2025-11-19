@@ -1,6 +1,9 @@
 clean:
 	cargo clean
 
+generate-ext:
+	(cd activity-sleepy/wit && obelisk generate extensions activity_wasm . ext)
+
 build:
 	(cd activity-sleepy && cargo build --release)
 
