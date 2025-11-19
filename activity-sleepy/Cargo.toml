@@ -9,6 +9,3 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wit-bindgen.workspace = true
-
-[profile.release]
-opt-level = "s"
