@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "activity-sleepy",
+    "webhook-tutorial",
     "workflow-tutorial",
 ]
 resolver = "2"
@@ -22,6 +23,6 @@ lto = true
 overflow-checks = true
 
 [profile.workflow]
-inherits = "release"
 opt-level = "s"
 debug = "line-tables-only"
+inherits = "release"
