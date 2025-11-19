@@ -1,0 +1,9 @@
+cargo-edit-upgrade 0.13.7
+cargo-expand 1.0.118
+cargo generate 0.23.5
+just 1.43.0
+obelisk 0.26.2
+pkg-config 0.29.2
+rustc 1.90.0 (1159e78c4 2025-09-14)
+wasm-tools 1.239.0
+ldd (GNU libc) 2.40
