@@ -1,0 +1,19 @@
+[workspace]
+resolver = "2"
+members = ["activity-sleepy"]
+
+[workspace.package]
+version = "0.1.0"
+license = "MIT"
+authors = ["Project Developers"]
+edition = "2024"
+repository = "TBD"
+rust-version = "1.90.0"
+
+[workspace.dependencies]
+wit-bindgen = "0.48.0"
+
+[profile.release]
+opt-level = "s"
+lto = true
+overflow-checks = true
