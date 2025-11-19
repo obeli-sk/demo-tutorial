@@ -20,3 +20,8 @@ wit-bindgen = "0.48.0"
 opt-level = "s"
 lto = true
 overflow-checks = true
+
+[profile.workflow]
+inherits = "release"
+opt-level = "s"
+debug = "line-tables-only"
