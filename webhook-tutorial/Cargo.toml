@@ -1,17 +1,14 @@
 [package]
 name = "webhook-tutorial"
-version = "0.1.0"
-authors = ["Tomas Olvecky <tomas.olvecky@gmail.com>"]
-edition = "2024"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-wit-bindgen = "0.48.0"
-wstd = "0.6.3"
-
-[profile.release]
-opt-level = "s"
-debug = "line-tables-only"
+anyhow.workspace = true
+wit-bindgen.workspace = true
+wstd.workspace = true
 

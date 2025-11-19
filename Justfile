@@ -7,6 +7,7 @@ generate-ext:
 build:
 	(cd activity-sleepy && cargo build --release)
 	(cd workflow-tutorial && cargo build --profile=workflow)
+	(cd webhook-tutorial && cargo build --profile=webhook)
 
 verify:
 	obelisk server verify --config ${CONFIG:-obelisk.toml}

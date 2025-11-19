@@ -17,3 +17,17 @@ directories  = { enabled = true, reuse_on_retry = false} # Each execution run st
 name = "workflow_tutorial"
 location.path = "${OBELISK_TOML_DIR}/target/wasm32-unknown-unknown/workflow/workflow_tutorial.wasm"
 backtrace.sources = {".../src/lib.rs" = "${OBELISK_TOML_DIR}/workflow-tutorial/src/lib.rs"}
+
+[[http_server]]
+name = "external"
+listening_addr = "0.0.0.0:9000"
+
+[[webhook_endpoint]]
+name = "webhook_tutorial"
+location.path = "${OBELISK_TOML_DIR}/target/wasm32-wasip2/webhook/webhook_tutorial.wasm"
+http_server = "external"
+routes = ["/*"]
+forward_stdout = "stderr"                                          # forwards stdout to host's stderr
+forward_stderr = "stderr"                                          # forwards stderr to host's stderr
+backtrace.sources = {".../src/lib.rs" = "${OBELISK_TOML_DIR}/webhook-tutorial/src/lib.rs"}
+

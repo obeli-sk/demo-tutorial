@@ -375,6 +375,7 @@ dependencies = [
 name = "webhook-tutorial"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "wit-bindgen 0.48.0",
  "wstd",
 ]
