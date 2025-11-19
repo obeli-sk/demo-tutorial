@@ -7,3 +7,4 @@ enabled = true
 [[activity_wasm]]
 name = "activity_sleepy"
 location.path = "${OBELISK_TOML_DIR}/target/wasm32-wasip2/release/activity_sleepy.wasm"
+exec.lock_expiry.seconds = 10

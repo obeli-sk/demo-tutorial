@@ -1,5 +1,5 @@
 package any:any;
 
 world any {
-    export template-fibo:activity/fibo-activity-ifc;
+    export tutorial:activity/activity-sleepy;
 }

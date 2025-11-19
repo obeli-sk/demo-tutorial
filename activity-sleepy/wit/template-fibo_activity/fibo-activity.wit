@@ -1,5 +1,5 @@
-package template-fibo:activity;
+package tutorial:activity;
 
-interface fibo-activity-ifc {
-    fibo: func(n: u8) -> result<u64>;
+interface activity-sleepy {
+    step: func(idx: u64, sleep-millis: u64) -> result<u64>;
 }
