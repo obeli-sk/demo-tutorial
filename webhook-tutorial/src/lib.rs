@@ -14,11 +14,11 @@ async fn main(request: Request<Body>) -> Result<Response<Body>, Error> {
     let response = match path {
         "/serial" => {
             workflow::serial(ITERATIONS).unwrap();
-            Response::builder().body(Body::from("serial workflow finished"))
+            Response::builder().body(Body::from("serial workflow completed"))
         }
         "/parallel" => {
             workflow::parallel(ITERATIONS).unwrap();
-            Response::builder().body(Body::from("parallel workflow finished"))
+            Response::builder().body(Body::from("parallel workflow completed"))
         }
         _ => Response::builder()
             .status(StatusCode::NOT_FOUND)

@@ -29,14 +29,18 @@ impl Guest for Component {
     }
 
     fn parallel(iterations: u64) -> Result<(), ()> {
+        log::info("parallel started");
         let join_set = new_join_set_generated(ClosingStrategy::Complete);
         for i in 0..iterations {
             step_submit(&join_set, i, i * 200);
         }
+        log::info("parallel submitted all child executions");
         for _ in 0..iterations {
             let (_execution_id, result) = step_await_next(&join_set).unwrap();
-            result.unwrap();
+            let result = result.unwrap();
+            log::info(&format!("child succeeded {result}"));
         }
+        log::info("parallel completed");
         Ok(())
     }
 }
