@@ -14,12 +14,10 @@ generate!({ generate_all });
 struct Component;
 export!(Component);
 
-const ITERATIONS: u64 = 10;
-
 impl Guest for Component {
     fn serial() -> Result<(), ()> {
         log::info("serial started");
-        for i in 0..ITERATIONS {
+        for i in 0..10 {
             log::info("Persistent sleep started");
             workflow_support::sleep(ScheduleAt::In(Duration::Seconds(1)));
             log::info("Persistent sleep finished");
@@ -33,11 +31,12 @@ impl Guest for Component {
     fn parallel() -> Result<(), ()> {
         log::info("parallel started");
         let join_set = new_join_set_generated(ClosingStrategy::Complete);
-        for i in 0..ITERATIONS {
+        let max_iterations = 10;
+        for i in 0..max_iterations {
             step_submit(&join_set, i, i * 200);
         }
         log::info("parallel submitted all child executions");
-        for _ in 0..ITERATIONS {
+        for _ in 0..max_iterations {
             let (_execution_id, result) = step_await_next(&join_set).unwrap();
             let result = result.unwrap();
             log::info(&format!("child succeeded {result}"));
