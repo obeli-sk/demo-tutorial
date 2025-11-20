@@ -4,6 +4,7 @@ activities.directories.enabled = true   # Allow file I/O for activities with `di
 
 [log.stdout]
 enabled = true
+level = "warn,obelisk=info,app=trace"
 
 [[activity_wasm]]
 name = "activity_sleepy"
