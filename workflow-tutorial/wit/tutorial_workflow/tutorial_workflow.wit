@@ -1,6 +1,6 @@
 package tutorial:workflow;
 
 interface workflow {
-    serial:   func() -> result;
-    parallel: func() -> result;
+    serial:   func() -> result<u64>;
+    parallel: func() -> result<u64>;
 }

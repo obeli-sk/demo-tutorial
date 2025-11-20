@@ -11,12 +11,12 @@ async fn main(request: Request<Body>) -> Result<Response<Body>, Error> {
     let path = request.uri().path_and_query().unwrap().as_str();
     let response = match path {
         "/serial" => {
-            workflow::serial().unwrap();
-            Response::builder().body(Body::from("serial workflow completed"))
+            let acc = workflow::serial().unwrap();
+            Response::builder().body(Body::from(format!("serial workflow completed: {acc}")))
         }
         "/parallel" => {
-            workflow::parallel().unwrap();
-            Response::builder().body(Body::from("parallel workflow completed"))
+            let acc = workflow::parallel().unwrap();
+            Response::builder().body(Body::from(format!("parallel workflow completed: {acc}")))
         }
         _ => Response::builder()
             .status(StatusCode::NOT_FOUND)
