@@ -40,6 +40,9 @@
 
         in
         {
+          devShells.noObelisk = pkgs.mkShell {
+            nativeBuildInputs = commonDeps;
+          };
           devShells.default = pkgs.mkShell {
             nativeBuildInputs = withObelisk;
           };
