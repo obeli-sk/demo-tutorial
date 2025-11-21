@@ -31,4 +31,3 @@ routes = ["/*"]
 forward_stdout = "stderr"                                          # forwards stdout to host's stderr
 forward_stderr = "stderr"                                          # forwards stderr to host's stderr
 backtrace.sources = {".../src/lib.rs" = "${OBELISK_TOML_DIR}/webhook-tutorial/src/lib.rs"}
-
