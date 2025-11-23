@@ -22,7 +22,7 @@ impl Guest for Component {
             log::info("Persistent sleep started");
             workflow_support::sleep(ScheduleAt::In(Duration::Seconds(1)));
             log::info("Persistent sleep finished");
-            let result = step(i, i * 200).unwrap();
+            let result = step(i, i * 200).inspect_err(|_| log::error("step timed out"))?;
             acc += result;
             log::info(&format!("Step succeeded {i}=={result}"));
         }
@@ -44,7 +44,7 @@ impl Guest for Component {
         for (i, join_set) in handles {
             let (_execution_id, result) =
                 step_await_next(&join_set).expect("every join set has 1 execution");
-            let result = result.expect("step did not time out");
+            let result = result.inspect_err(|_| log::error("step timed out"))?;
             acc = 10 * acc + result; // order-sensitive
             log::info(&format!("child({i})={result}, acc={acc}"));
             workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)));
