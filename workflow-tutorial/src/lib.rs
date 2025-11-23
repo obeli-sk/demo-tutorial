@@ -42,10 +42,11 @@ impl Guest for Component {
         for _ in 0..max_iterations {
             let (_execution_id, result) = step_await_next(&join_set).unwrap();
             let result = result.unwrap();
-            acc += result;
-            log::info(&format!("child succeeded {result}"));
+            acc = 10 * acc + result; // order-sensitive
+            log::info(&format!("child succeeded {result}, acc={acc}"));
+            workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)));
         }
-        log::info("parallel completed");
+        log::info(&format!("parallel completed: {acc}"));
         Ok(acc)
     }
 }
