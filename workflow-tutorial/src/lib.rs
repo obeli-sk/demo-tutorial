@@ -24,7 +24,7 @@ impl Guest for Component {
             log::info("Persistent sleep finished");
             let result = step(i, i * 200).inspect_err(|_| log::error("step timed out"))?;
             acc += result;
-            log::info(&format!("Step succeeded {i}=={result}"));
+            log::info(&format!("step({i})={result}"));
         }
         log::info("serial completed");
         Ok(acc)
@@ -46,7 +46,7 @@ impl Guest for Component {
                 step_await_next(&join_set).expect("every join set has 1 execution");
             let result = result.inspect_err(|_| log::error("step timed out"))?;
             acc = 10 * acc + result; // order-sensitive
-            log::info(&format!("child({i})={result}, acc={acc}"));
+            log::info(&format!("step({i})={result}, acc={acc}"));
             workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)));
         }
         log::info(&format!("parallel completed: {acc}"));
