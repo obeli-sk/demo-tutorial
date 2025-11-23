@@ -4,11 +4,14 @@ use obelisk::{
     types::time::{Duration, ScheduleAt},
     workflow::workflow_support::{self, ClosingStrategy, new_join_set_generated},
 };
+use std::collections::HashSet;
 use tutorial::{
     activity::activity_sleepy::step,
     activity_obelisk_ext::activity_sleepy::{step_await_next, step_submit},
 };
 use wit_bindgen::generate;
+
+mod util;
 
 generate!({ generate_all });
 struct Component;
@@ -30,14 +33,15 @@ impl Guest for Component {
         Ok(acc)
     }
 
+    #[allow(clippy::mutable_key_type)]
     fn parallel() -> Result<u64, ()> {
         log::info("parallel started");
         let max_iterations = 10;
-        let mut handles = Vec::new();
+        let mut handles = HashSet::new();
         for i in 0..max_iterations {
             let join_set = new_join_set_generated(ClosingStrategy::Complete);
             step_submit(&join_set, i, i * 200);
-            handles.push((i, join_set));
+            handles.insert((i, join_set));
         }
         log::info("parallel submitted all child executions");
         let mut acc = 0;
