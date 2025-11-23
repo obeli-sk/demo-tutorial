@@ -16,7 +16,7 @@ rust-version = "1.90.0"
 
 [workspace.dependencies]
 anyhow = "1"
-wit-bindgen = "0.48.0"
+wit-bindgen = "0.48.1"
 wstd = "0.6.3"
 
 [profile.release]
