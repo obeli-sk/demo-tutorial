@@ -32,18 +32,21 @@ impl Guest for Component {
 
     fn parallel() -> Result<u64, ()> {
         log::info("parallel started");
-        let join_set = new_join_set_generated(ClosingStrategy::Complete);
         let max_iterations = 10;
+        let mut handles = Vec::new();
         for i in 0..max_iterations {
+            let join_set = new_join_set_generated(ClosingStrategy::Complete);
             step_submit(&join_set, i, i * 200);
+            handles.push((i, join_set));
         }
         log::info("parallel submitted all child executions");
         let mut acc = 0;
-        for _ in 0..max_iterations {
-            let (_execution_id, result) = step_await_next(&join_set).unwrap();
-            let result = result.unwrap();
+        for (i, join_set) in handles {
+            let (_execution_id, result) =
+                step_await_next(&join_set).expect("every join set has 1 execution");
+            let result = result.expect("step did not time out");
             acc = 10 * acc + result; // order-sensitive
-            log::info(&format!("child succeeded {result}, acc={acc}"));
+            log::info(&format!("child({i})={result}, acc={acc}"));
             workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)));
         }
         log::info(&format!("parallel completed: {acc}"));
