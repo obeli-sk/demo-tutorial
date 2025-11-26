@@ -15,6 +15,11 @@ forward_stderr = "stderr"
 directories  = { enabled = true, reuse_on_retry = false} # Each execution run starts with an empty preopened directory.
 
 [[workflow]]
+name = "workflow_sleepy"
+location.path = "${OBELISK_TOML_DIR}/target/wasm32-unknown-unknown/workflow/workflow_sleepy.wasm"
+backtrace.sources = {".../src/lib.rs" = "${OBELISK_TOML_DIR}/workflow-sleepy/src/lib.rs"}
+
+[[workflow]]
 name = "workflow_tutorial"
 location.path = "${OBELISK_TOML_DIR}/target/wasm32-unknown-unknown/workflow/workflow_tutorial.wasm"
 backtrace.sources = {".../src/lib.rs" = "${OBELISK_TOML_DIR}/workflow-tutorial/src/lib.rs"}

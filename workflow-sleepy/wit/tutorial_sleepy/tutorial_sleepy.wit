@@ -1,0 +1,5 @@
+package tutorial:sleepy;
+
+interface sleepy-workflow {
+    sleepy-workflow: func(idx: u64) -> result;
+}

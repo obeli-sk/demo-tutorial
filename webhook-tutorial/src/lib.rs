@@ -18,6 +18,10 @@ async fn main(request: Request<Body>) -> Result<Response<Body>, Error> {
             let acc = workflow::parallel().unwrap();
             Response::builder().body(Body::from(format!("parallel workflow completed: {acc}")))
         }
+        "/sleep" => {
+            workflow::sleepy_parent(10_000).unwrap();
+            Response::builder().body(Body::empty())
+        }
         _ => Response::builder()
             .status(StatusCode::NOT_FOUND)
             .body(Body::from("not found")),

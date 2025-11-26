@@ -3,6 +3,7 @@ members = [
     "activity-sleepy",
     "webhook-tutorial",
     "workflow-tutorial",
+    "workflow-sleepy",
 ]
 resolver = "2"
 

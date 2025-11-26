@@ -8,6 +8,7 @@ use std::collections::HashSet;
 use tutorial::{
     activity::activity_sleepy::step,
     activity_obelisk_ext::activity_sleepy::{step_await_next, step_submit},
+    sleepy_obelisk_ext::sleepy_workflow::{sleepy_workflow_await_next, sleepy_workflow_submit},
 };
 use wit_bindgen::generate;
 
@@ -55,5 +56,20 @@ impl Guest for Component {
         }
         log::info(&format!("parallel completed: {acc}"));
         Ok(acc)
+    }
+
+    fn sleepy_parent(max: u64) -> Result<(), ()> {
+        let join_set = &new_join_set_generated(ClosingStrategy::Complete);
+        for idx in 0..max {
+            log::info(&format!("Submitting child workflow {idx}"));
+            sleepy_workflow_submit(join_set, idx);
+        }
+        log::info(&format!("Created {max} child workflows"));
+        for counter in 0..max {
+            let (_execution_id, _result) = sleepy_workflow_await_next(join_set).unwrap();
+            log::debug(&format!("Collected {counter} child workflows"));
+        }
+        log::info(&format!("Done waiting for {max} child workflows"));
+        Ok(())
     }
 }

@@ -479,6 +479,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "workflow-sleepy"
+version = "0.1.0"
+dependencies = [
+ "wit-bindgen 0.48.1",
+]
+
+[[package]]
 name = "workflow-tutorial"
 version = "0.1.0"
 dependencies = [

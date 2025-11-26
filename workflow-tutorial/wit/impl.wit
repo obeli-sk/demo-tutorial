@@ -2,6 +2,9 @@ package any:any;
 
 world any {
     export tutorial:workflow/workflow;
+
+    import tutorial:sleepy-obelisk-ext/sleepy-workflow;
+
     // Import of the activity.
     import tutorial:activity/activity-sleepy;
     // Generated extensions for `parallel` workflow.
