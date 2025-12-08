@@ -2,7 +2,7 @@ use exports::tutorial::workflow::workflow::Guest;
 use obelisk::{
     log::log,
     types::time::{Duration, ScheduleAt},
-    workflow::workflow_support::{self, ClosingStrategy, new_join_set_generated},
+    workflow::workflow_support,
 };
 use tutorial::{
     activity::activity_sleepy::step,
@@ -20,7 +20,7 @@ impl Guest for Component {
         let mut acc = 0;
         for i in 0..10 {
             log::info("Persistent sleep started");
-            workflow_support::sleep(ScheduleAt::In(Duration::Seconds(1)));
+            workflow_support::sleep(ScheduleAt::In(Duration::Seconds(1)))?;
             log::info("Persistent sleep finished");
             let result = step(i, i * 200).inspect_err(|_| log::error("step timed out"))?;
             acc += result;
@@ -35,7 +35,7 @@ impl Guest for Component {
         let max_iterations = 10;
         let mut handles = Vec::new();
         for i in 0..max_iterations {
-            let join_set = new_join_set_generated(ClosingStrategy::Complete);
+            let join_set = workflow_support::join_set_create();
             step_submit(&join_set, i, i * 200);
             handles.push((i, join_set));
         }
@@ -47,7 +47,7 @@ impl Guest for Component {
             let result = result.inspect_err(|_| log::error("step timed out"))?;
             acc = 10 * acc + result; // order-sensitive
             log::info(&format!("step({i})={result}, acc={acc}"));
-            workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)));
+            workflow_support::sleep(ScheduleAt::In(Duration::Milliseconds(300)))?;
         }
         log::info(&format!("parallel completed: {acc}"));
         Ok(acc)
