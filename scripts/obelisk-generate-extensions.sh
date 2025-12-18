@@ -20,6 +20,4 @@ generate() {
   done
 }
 
-generate "activity" "activity_wasm"
-generate "activity-stub" "activity_stub"
-generate "workflow" "workflow"
+generate "activity-sleepy" "activity_wasm"
