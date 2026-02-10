@@ -19,4 +19,4 @@ generate() {
   done
 }
 
-generate "activity-sleepy" "activity_wasm"
+generate "activity" "activity_wasm"
