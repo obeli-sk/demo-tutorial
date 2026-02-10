@@ -1,8 +1,8 @@
 [workspace]
 members = [
-    "activity-sleepy",
-    "webhook-tutorial",
-    "workflow-tutorial",
+    "activity/activity-sleepy",
+    "webhook/webhook-tutorial",
+    "workflow/workflow-tutorial",
 ]
 resolver = "2"
 

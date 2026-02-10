@@ -7,7 +7,7 @@ world any {
     // Generated extensions for `parallel` workflow.
     import tutorial:activity-obelisk-ext/activity-sleepy;
     // Obelisk SDK
-    import obelisk:types/execution@4.0.0;
-    import obelisk:workflow/workflow-support@4.0.0;
+    import obelisk:types/execution@4.1.0;
+    import obelisk:workflow/workflow-support@4.1.0;
     import obelisk:log/log@1.0.0;
 }

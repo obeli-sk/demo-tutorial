@@ -2,7 +2,7 @@ api.listening_addr = "127.0.0.1:5005"   # gRPC API server
 webui.listening_addr = "127.0.0.1:8080" # Web UI
 activities.directories.enabled = true   # Allow file I/O for activities with `directories.enabled = true`
 
-[log.stdout]
+[log.console]
 enabled = true
 level = "warn,obelisk=info,app=debug" # app=trace to see replays
 
