@@ -7,8 +7,8 @@ build:
 	(cd webhook/webhook-tutorial && cargo build --profile=webhook)
 
 verify:
-	obelisk server verify --config ${CONFIG:-obelisk.toml}
+	obelisk server verify --server-config server.toml --deployment ${CONFIG:-obelisk.toml}
 
 serve:
-	obelisk server run --config ${CONFIG:-obelisk.toml}
+	obelisk server run --server-config server.toml --deployment ${CONFIG:-obelisk.toml}
 
