@@ -27,8 +27,44 @@ curl http://localhost:9090/serial
 curl http://localhost:9090/parallel
 ```
 
-Open the Web UI at http://localhost:8080 to see the execution log
-and trace view for each workflow.
+## Inspecting executions
+
+List all executions, including child workflows and activities spawned by the webhook:
+
+```sh
+curl -s "http://localhost:5005/v1/executions?show_derived=true" \
+  -H 'Accept: application/json'
+```
+
+Each entry has an `execution_id`. Fetch its logs (includes `console.log` output):
+
+```sh
+EXECUTION_ID=<paste id here>
+curl -s "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs" \
+  -H 'Accept: application/json'
+```
+
+Open the **Web UI** at http://localhost:8080 for a visual trace of each execution.
+Click an execution and enable **Autoload children** to see the full hierarchy
+of webhook → workflow → activities, with timestamps and structured log entries.
+
+## Crash recovery
+
+Start the serial workflow, then kill the server while it's running:
+
+```sh
+# terminal 1
+curl http://localhost:9090/serial
+
+# terminal 2 — kill mid-execution
+kill $(pgrep obelisk)
+```
+
+Restart the server — Obelisk resumes the workflow from its last completed step:
+
+```sh
+obelisk server run --deployment deployment.toml
+```
 
 ## Rust (advanced)
 
@@ -39,5 +75,3 @@ It requires Rust and Cargo to build:
 just build-rust
 just serve-rust
 ```
-
-See `rust/` for the full source.

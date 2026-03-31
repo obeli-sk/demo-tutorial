@@ -39,7 +39,7 @@ jobs:
           nix develop .#noObelisk --command echo
 
       - name: cargo fmt
-        run: nix develop .#noObelisk --command cargo fmt --check
+        run: nix develop .#noObelisk --command ./scripts/fmt-check.sh
 
   check-dev-deps:
     runs-on: ubuntu-24.04
@@ -85,5 +85,5 @@ jobs:
           nix develop .#noObelisk --command echo
 
       - name: cargo clippy
-        run: nix develop .#noObelisk --command cargo clippy --workspace --all-targets -- -D warnings
+        run: nix develop .#noObelisk --command ./scripts/clippy-check.sh
 
