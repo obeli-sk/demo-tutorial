@@ -29,19 +29,24 @@ curl http://localhost:9090/parallel
 
 ## Inspecting executions
 
-List all executions, including child workflows and activities spawned by the webhook:
+List top-level executions (one per webhook call):
 
 ```sh
-curl -s "http://localhost:5005/v1/executions?show_derived=true" \
-  -H 'Accept: application/json'
+curl -s "http://localhost:5005/v1/executions"
 ```
 
-Each entry has an `execution_id`. Fetch its logs (includes `console.log` output):
+```
+E_01KN209P2PCVPGAPRC3DBAC92C  Finished(ok)  wasi:http/incoming-handler.handle  2026-03-31 13:11:01 UTC
+E_01KN208SQDTVW4ECBT1DPHAD03  Finished(ok)  wasi:http/incoming-handler.handle  2026-03-31 13:10:32 UTC
+```
+
+Each line is: execution ID, state, FFQN (all webhooks use `wasi:http/incoming-handler.handle`), and creation time.
+
+Fetch logs for an execution (includes `console.log` output from workflows and activities):
 
 ```sh
-EXECUTION_ID=<paste id here>
-curl -s "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs" \
-  -H 'Accept: application/json'
+EXECUTION_ID=E_01KN209P2PCVPGAPRC3DBAC92C
+curl -s "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs"
 ```
 
 Open the **Web UI** at http://localhost:8080 for a visual trace of each execution.
@@ -60,10 +65,11 @@ curl http://localhost:9090/serial
 kill $(pgrep obelisk)
 ```
 
-Restart the server — Obelisk resumes the workflow from its last completed step:
+Restart the server — the deployment is stored in the database, so no `--deployment` flag is needed.
+Obelisk resumes the workflow from its last completed step:
 
 ```sh
-obelisk server run --deployment deployment.toml
+obelisk server run
 ```
 
 ## Rust (advanced)
