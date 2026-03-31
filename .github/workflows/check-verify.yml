@@ -41,9 +41,10 @@ jobs:
         run: |
           nix develop --command echo
 
-      - name: Build WASM components
-        run: nix develop --command just build
-
-      - name: Verify obelisk.toml
+      - name: Verify deployment.toml
         run: |
           nix develop --command just verify
+
+      - name: End-to-end test
+        run: |
+          nix develop --command just e2e
