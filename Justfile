@@ -4,6 +4,9 @@ serve:
 verify:
 	obelisk server verify --deployment deployment.toml
 
+e2e:
+	./scripts/e2e.sh
+
 # Rust-based example (requires Rust toolchain)
 build-rust:
 	(cd rust/activity-sleepy && cargo build --release)

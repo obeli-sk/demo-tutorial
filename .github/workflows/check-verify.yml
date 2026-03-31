@@ -44,3 +44,7 @@ jobs:
       - name: Verify deployment.toml
         run: |
           nix develop --command just verify
+
+      - name: End-to-end test
+        run: |
+          nix develop --command just e2e
