@@ -1,23 +1,43 @@
 # Demo-tutorial
-This repo shows the code used in the
-[Comparing Obelisk with DBOS](http://obeli.sk/blog/comparing-dbos-part-1) blog post.
 
-## Setting up
-If using nix and direnv:
-```sh
-cp .envrc-example .envrc
-direnv allow
-```
-Otherwise install dependencies as described in [dev-deps.txt](dev-deps.txt). Following is
-needed to build and run the project:
-* Rust and Cargo
-* Obelisk
-* Just (not strictly necessary)
+This repo contains the code used in the
+[Comparing Obelisk with DBOS](http://obeli.sk/blog/comparing-dbos-part-1) blog post,
+updated for Obelisk 0.36 with native JavaScript support.
 
-Build and run:
+The tutorial shows a **serial** and a **parallel** durable workflow,
+each driving a simple `step` activity.
+
+## JavaScript (default)
+
+No build step required. Just install [Obelisk](https://obeli.sk/install/) and run:
+
 ```sh
-just build serve
+obelisk server run --deployment deployment.toml
 ```
-When the server is running,
-http://localhost:9000/serial and http://localhost:9000/parallel endpoints
-can be used to start the workflows.
+
+The server starts three endpoints:
+- **Web UI**: http://localhost:8080
+- **Webhook**: http://localhost:9090
+- **API**: http://localhost:5005
+
+Trigger the workflows:
+
+```sh
+curl http://localhost:9090/serial
+curl http://localhost:9090/parallel
+```
+
+Open the Web UI at http://localhost:8080 to see the execution log
+and trace view for each workflow.
+
+## Rust (advanced)
+
+The `rust/` directory contains the original Rust-based implementation.
+It requires Rust and Cargo to build:
+
+```sh
+just build-rust
+just serve-rust
+```
+
+See `rust/` for the full source.
