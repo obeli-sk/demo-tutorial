@@ -4,20 +4,24 @@ location = "${DEPLOYMENT_DIR}/activity/step.js"
 ffqn = "tutorial:demo/activity.step"
 params = [
   { name = "idx", type = "u64" },
-  { name = "sleep_millis", type = "u64" },
+  { name = "sleep-millis", type = "u64" },
 ]
+return_type = "result<string>"
+exec.lock_expiry.seconds = 10
 
 [[workflow_js]]
 name = "serial"
 location = "${DEPLOYMENT_DIR}/workflow/serial.js"
 ffqn = "tutorial:demo/workflow.serial"
 params = []
+return_type = "result<string, string>"
 
 [[workflow_js]]
 name = "parallel"
 location = "${DEPLOYMENT_DIR}/workflow/parallel.js"
 ffqn = "tutorial:demo/workflow.parallel"
 params = []
+return_type = "result<string, string>"
 
 [[webhook_endpoint_js]]
 name = "webhook"
