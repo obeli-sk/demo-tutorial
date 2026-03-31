@@ -42,12 +42,28 @@ E_01KN208SQDTVW4ECBT1DPHAD03  Finished(ok)  wasi:http/incoming-handler.handle  2
 
 Each line is: execution ID, state, FFQN (all webhooks use `wasi:http/incoming-handler.handle`), and creation time.
 
-Fetch logs for an execution (includes `console.log` output from workflows and activities):
+Fetch logs for a webhook execution (includes its `console.log` output):
 
 ```sh
 EXECUTION_ID=E_01KN209P2PCVPGAPRC3DBAC92C
 curl -s "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs"
 ```
+
+To see the child executions spawned by a webhook — the workflow and its activities — use
+`show_derived=true`. Narrow to tutorial executions with `ffqn_prefix`:
+
+```sh
+curl -s "http://localhost:5005/v1/executions?show_derived=true&ffqn_prefix=tutorial:demo"
+```
+
+```
+E_01KN209P2PCVPGAPRC3DBAC92C.o:1_1         Finished(ok)  tutorial:demo/workflow.serial   2026-03-31 13:11:01 UTC
+E_01KN209P2PCVPGAPRC3DBAC92C.o:1_1.o:2-step_1  Finished(ok)  tutorial:demo/activity.step 2026-03-31 13:11:01 UTC
+...
+```
+
+Then fetch logs for any individual execution by its ID. `console.log` calls in workflows
+and activities both appear as log entries.
 
 Open the **Web UI** at http://localhost:8080 for a visual trace of each execution.
 Click an execution and enable **Autoload children** to see the full hierarchy

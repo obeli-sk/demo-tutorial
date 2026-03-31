@@ -3,6 +3,7 @@
 export default function handle(request) {
     const url = new URL(request.url);
     const path = url.pathname;
+    console.log(`Handling request: ${path}`);
 
     if (path === "/serial") {
         const result = obelisk.call("tutorial:demo/workflow.serial", []);
