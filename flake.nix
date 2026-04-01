@@ -43,6 +43,8 @@
             openssl
             curlMinimal
             python3
+            # fly agent demo, not needed by the code
+            flyctl
           ];
           withObelisk = commonDeps ++ [ obelisk.packages.${system}.default ];
         in

@@ -1,0 +1,44 @@
+# Fly.io HTTP activity — a pre-built Rust/WASM component downloaded from the registry.
+# No compilation step required. Requires FLY_API_TOKEN to be set in the environment.
+[[activity_wasm]]
+name = "activity_fly_http"
+location = "oci://docker.io/getobelisk/components_fly_activity_fly_http:2026-03-31@sha256:cc831dc0cfeecf267c67c0340aa5e3de511ff71d5978a3225e837de184635de3"
+exec.lock_expiry.seconds = 15
+[[activity_wasm.allowed_host]]
+pattern = "https://api.machines.dev"
+methods = "*"
+[activity_wasm.allowed_host.secrets]
+env_vars = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+# Inner workflow: creates the fly.io app, launches a VM, runs the agent, returns output.
+# Does not delete the app — cleanup is the outer workflow's responsibility.
+[[workflow_js]]
+name = "agent"
+location = "${DEPLOYMENT_DIR}/workflow/agent.js"
+ffqn = "demo:fly-agent/workflow.agent"
+params = [
+  { name = "app-name", type = "string" },
+  { name = "org-slug", type = "string" },
+  { name = "prompt",   type = "string" },
+]
+return_type = "result<string, string>"
+
+# Outer (saga) workflow: calls the agent child workflow and always deletes
+# the fly.io app afterwards, even on failure or server crash.
+[[workflow_js]]
+name = "run"
+location = "${DEPLOYMENT_DIR}/workflow/run.js"
+ffqn = "demo:fly-agent/workflow.run"
+params = [
+  { name = "app-name", type = "string" },
+  { name = "org-slug", type = "string" },
+  { name = "prompt",   type = "string" },
+]
+return_type = "result<string, string>"
+
+# Webhook: HTTP entry point for triggering the saga.
+[[webhook_endpoint_js]]
+name = "webhook"
+location = "${DEPLOYMENT_DIR}/webhook/fly-agent.js"
+routes = [{ methods = ["GET"], route = "/run/:org-slug/:app-name/:prompt" }]
