@@ -4,14 +4,14 @@ export default function handle(request) {
     const url = new URL(request.url);
     const path = url.pathname;
     console.log(`Handling request: ${path}`);
-
+    const headers = { "x-obelisk-execution-id": obelisk.currentExecutionId() };
     if (path === "/serial") {
         const result = obelisk.call("tutorial:demo/workflow.serial", []);
-        return new Response(`serial workflow completed: ${result}`, { status: 200 });
+        return new Response(`serial workflow completed: ${result}`, { status: 200, headers });
     } else if (path === "/parallel") {
         const result = obelisk.call("tutorial:demo/workflow.parallel", []);
-        return new Response(`parallel workflow completed: ${result}`, { status: 200 });
+        return new Response(`parallel workflow completed: ${result}`, { status: 200, headers });
     } else {
-        return new Response("not found\ntry /serial or /parallel", { status: 404 });
+        return new Response("not found\ntry /serial or /parallel", { status: 404, headers });
     }
 }

@@ -23,7 +23,7 @@ Trigger the saga (pick a globally unique app name):
 
 ```sh
 APP=my-fly-agent-$(date +%s)
-curl "http://localhost:9090/run/personal/${APP}/what-is-42"
+curl -v "http://localhost:9090/run/personal/${APP}/what-is-42"
 ```
 
 ## Saga Recovery Demo
