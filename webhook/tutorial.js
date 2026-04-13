@@ -4,7 +4,7 @@ export default function handle(request) {
     const url = new URL(request.url);
     const path = url.pathname;
     console.log(`Handling request: ${path}`);
-    const headers = { "x-obelisk-execution-id": obelisk.currentExecutionId() };
+    const headers = { "x-obelisk-execution-id": obelisk.executionIdCurrent() };
     if (path === "/serial") {
         const result = obelisk.call("tutorial:demo/workflow.serial", []);
         return new Response(`serial workflow completed: ${result}`, { status: 200, headers });
