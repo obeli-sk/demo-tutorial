@@ -10,7 +10,7 @@ export default function handle(_request) {
     const prompt = process.env['prompt'];
 
     console.log(`Starting saga: org=${org_slug}, app=${app_name}, prompt=${prompt}`);
-    const headers = { "x-obelisk-execution-id": obelisk.currentExecutionId() };
+    const headers = { "x-obelisk-execution-id": obelisk.executionIdCurrent() };
     try {
         const result = obelisk.call("demo:fly-agent/workflow.run", [app_name, org_slug, prompt]);
         return new Response(`Agent completed:\n${result}\n`, { status: 200, headers });
