@@ -58,7 +58,7 @@ jobs:
       - name: Commit Changes
         run: |
           git checkout -b ${{ steps.branch-name.outputs.branch_name }}
-          git add Cargo.lock Cargo.toml
+          git add .
           if [ -n "$(git status --porcelain)" ]; then
               git commit -m "chore: Bump Rust dependencies"
               git push origin ${{ steps.branch-name.outputs.branch_name }}
