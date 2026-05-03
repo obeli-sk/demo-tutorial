@@ -17,7 +17,7 @@ jobs:
   bump-cargo-lock:
     runs-on: ubuntu-24.04
     env:
-      DEVSHELL: .#noObelisk    
+      DEVSHELL: .#noObelisk
     strategy:
       fail-fast: false
       matrix:
@@ -48,6 +48,7 @@ jobs:
         run: |
           nix develop $DEVSHELL --command cargo update
           nix develop $DEVSHELL --command ${{ matrix.cmd }}
+        working-directory: rust
 
       - name: Configure Git
         run: |
