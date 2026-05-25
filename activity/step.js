@@ -2,7 +2,7 @@
 // Activities are retried automatically on timeout or failure.
 export default async function step(idx, sleep_millis) {
     console.log(`Step ${idx} started`);
-    await new Promise(r => setTimeout(r, Number(sleep_millis)));
+    await new Promise(r => setTimeout(r, sleep_millis));
     console.log(`Step ${idx} completed`);
-    return String(idx);
+    return idx;
 }
