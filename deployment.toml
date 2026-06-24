@@ -1,6 +1,6 @@
 [[activity_js]]
 name = "step"
-location = "${DEPLOYMENT_DIR}/activity/step.js"
+location = "activity/step.js"
 ffqn = "tutorial:demo/activity.step"
 params = [
   { name = "idx", type = "u32" },
@@ -11,19 +11,19 @@ exec.lock_expiry.seconds = 10
 
 [[workflow_js]]
 name = "serial"
-location = "${DEPLOYMENT_DIR}/workflow/serial.js"
+location = "workflow/serial.js"
 ffqn = "tutorial:demo/workflow.serial"
 params = []
 return_type = "result<u32, string>"
 
 [[workflow_js]]
 name = "parallel"
-location = "${DEPLOYMENT_DIR}/workflow/parallel.js"
+location = "workflow/parallel.js"
 ffqn = "tutorial:demo/workflow.parallel"
 params = []
 return_type = "result<u32, string>"
 
 [[webhook_endpoint_js]]
 name = "webhook"
-location = "${DEPLOYMENT_DIR}/webhook/tutorial.js"
+location = "webhook/tutorial.js"
 routes = ["/*"]

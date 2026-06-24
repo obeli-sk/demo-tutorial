@@ -2,7 +2,7 @@
 
 This repo contains the code used in the
 [Comparing Obelisk with DBOS](http://obeli.sk/blog/comparing-dbos-part-1) blog post,
-updated for Obelisk 0.36 with native JavaScript support.
+updated for Obelisk 0.39 with native JavaScript support.
 
 The tutorial shows a **serial** and a **parallel** durable workflow,
 each driving a simple `step` activity.
