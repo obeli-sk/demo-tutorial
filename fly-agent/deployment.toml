@@ -15,7 +15,7 @@ replace_in = ["headers"]
 # Does not delete the app — cleanup is the outer workflow's responsibility.
 [[workflow_js]]
 name = "agent"
-location = "${DEPLOYMENT_DIR}/workflow/agent.js"
+location = "workflow/agent.js"
 ffqn = "demo:fly-agent/workflow.agent"
 params = [
   { name = "app-name", type = "string" },
@@ -28,7 +28,7 @@ return_type = "result<string, string>"
 # the fly.io app afterwards, even on failure or server crash.
 [[workflow_js]]
 name = "run"
-location = "${DEPLOYMENT_DIR}/workflow/run.js"
+location = "workflow/run.js"
 ffqn = "demo:fly-agent/workflow.run"
 params = [
   { name = "app-name", type = "string" },
@@ -40,5 +40,5 @@ return_type = "result<string, string>"
 # Webhook: HTTP entry point for triggering the saga.
 [[webhook_endpoint_js]]
 name = "webhook"
-location = "${DEPLOYMENT_DIR}/webhook/fly-agent.js"
+location = "webhook/fly-agent.js"
 routes = [{ methods = ["GET"], route = "/run/:org-slug/:app-name/:prompt" }]
