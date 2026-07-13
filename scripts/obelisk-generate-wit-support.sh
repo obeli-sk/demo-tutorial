@@ -22,7 +22,6 @@ generate() {
   done
 }
 
-# generate "activity" "activity_wasm" # blocked by process api dependency on wasi:io
-generate "activity-stub" "activity_stub"
-generate "workflow" "workflow"
-generate "webhook" "webhook_endpoint"
+# generate "rust/activity-sleepy" "activity_wasm" # blocked by process api dependency on wasi:io
+generate "rust/workflow-tutorial" "workflow"
+generate "rust/webhook-tutorial" "webhook_endpoint"
