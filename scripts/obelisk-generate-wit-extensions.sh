@@ -19,4 +19,4 @@ generate() {
   done
 }
 
-generate "activity" "activity"
+generate "rust/activity-sleepy" "activity"
