@@ -5,6 +5,7 @@
 // Usage:
 //   curl http://localhost:9090/run/personal/my-unique-app/what-is-42
 import { run } from "demo:fly-agent/workflow";
+import * as obelisk from "obelisk:webhook@1.0.0";
 
 export default function handle(_request) {
     const org_slug = process.env['org-slug'];

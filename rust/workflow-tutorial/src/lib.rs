@@ -36,7 +36,7 @@ impl Guest for Component {
         let mut handles = Vec::new();
         for i in 0..max_iterations {
             let join_set = workflow_support::join_set_create();
-            step_submit(&join_set, i, i * 200);
+            step_submit(&join_set, i, i * 200).expect("child execution submission succeeds");
             handles.push((i, join_set));
         }
         log::info("parallel submitted all child executions");

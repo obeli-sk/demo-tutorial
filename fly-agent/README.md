@@ -16,7 +16,7 @@ export FLY_API_TOKEN=your_token_here
 ## Run
 
 ```sh
-obelisk server run --deployment deployment.toml
+obelisk server run --server-config server.toml --deployment deployment.toml
 ```
 
 Trigger the saga (pick a globally unique app name):
