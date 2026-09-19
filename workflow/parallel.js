@@ -1,6 +1,7 @@
 // A workflow that submits all 10 step activities in parallel using join sets,
 // then awaits their results one by one (structured concurrency).
 import { stepSubmit, stepAwaitNext } from "tutorial:demo-obelisk-ext/activity";
+import * as obelisk from "obelisk:workflow@1.0.0";
 
 export default function parallel() {
     const handles = [];

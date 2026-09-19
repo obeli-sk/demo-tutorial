@@ -2,6 +2,7 @@
 // Routes /serial and /parallel to the corresponding workflow.
 import { serial } from "tutorial:demo/workflow";
 import { parallel } from "tutorial:demo/workflow";
+import * as obelisk from "obelisk:webhook@1.0.0";
 
 export default function handle(request) {
     const url = new URL(request.url);

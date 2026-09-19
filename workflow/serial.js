@@ -2,6 +2,7 @@
 // with a 1-second persistent sleep between each call.
 // Persistent sleeps survive server crashes and restarts.
 import { step } from "tutorial:demo/activity";
+import * as obelisk from "obelisk:workflow@1.0.0";
 
 export default function serial() {
     let acc = 0;

@@ -4,13 +4,15 @@
 set -exuo pipefail
 cd "$(dirname "$0")/.."
 
+export OBELISK_API_TOKEN="demo-tutorial-e2e-token-0000000000"
 obelisk server run --deployment deployment.toml &
 SERVER_PID=$!
 trap "kill $SERVER_PID 2>/dev/null; wait $SERVER_PID 2>/dev/null" EXIT
 
 # Wait for server to be ready (poll the API)
 for i in $(seq 1 30); do
-    if curl -sf http://localhost:5005/v1/components > /dev/null 2>&1; then
+    if curl -sf -H "Authorization: Bearer $OBELISK_API_TOKEN" \
+        http://localhost:5005/v1/components > /dev/null 2>&1; then
         break
     fi
     sleep 1
