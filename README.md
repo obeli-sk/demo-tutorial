@@ -2,7 +2,7 @@
 
 This repo contains the code used in the
 [Comparing Obelisk with DBOS](http://obeli.sk/blog/comparing-dbos-part-1) blog post,
-updated for Obelisk 0.39 with native JavaScript support.
+updated for Obelisk 0.42 with native JavaScript support.
 
 The tutorial shows a **serial** and a **parallel** durable workflow,
 each driving a simple `step` activity.
@@ -12,7 +12,7 @@ each driving a simple `step` activity.
 No build step required. Just install [Obelisk](https://obeli.sk/install/) and run:
 
 ```sh
-obelisk server run --deployment deployment.toml
+obelisk server run --server-config server.toml --app-config app.toml --deployment deployment.toml
 ```
 
 The server starts three endpoints:
@@ -85,7 +85,7 @@ Restart the server — the deployment is stored in the database, so no `--deploy
 Obelisk resumes the workflow from its last completed step:
 
 ```sh
-obelisk server run
+obelisk server run --server-config server.toml --app-config app.toml
 ```
 
 ## Rust (advanced)

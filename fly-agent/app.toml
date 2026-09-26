@@ -1,5 +1,7 @@
+app_name = "demo-tutorial-fly-agent"
+
 [secrets]
-FLY_API_TOKEN = { env = "FLY_API_TOKEN" }
+FLY_API_TOKEN = {}
 
 [[outbound_http.allowed_host]]
 pattern = "https://api.machines.dev"
