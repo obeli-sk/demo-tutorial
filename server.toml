@@ -1,0 +1,2 @@
+[webhooks]
+request_timeout.seconds = 120

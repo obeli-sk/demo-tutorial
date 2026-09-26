@@ -5,7 +5,7 @@ set -exuo pipefail
 cd "$(dirname "$0")/.."
 
 export OBELISK_API_TOKEN="demo-tutorial-e2e-token-0000000000"
-obelisk server run --deployment deployment.toml &
+obelisk server run --server-config server.toml --app-config app.toml --deployment deployment.toml &
 SERVER_PID=$!
 trap "kill $SERVER_PID 2>/dev/null; wait $SERVER_PID 2>/dev/null" EXIT
 
