@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node --test activity/fly-api.test.mjs"
+  }
+}

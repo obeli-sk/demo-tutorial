@@ -6,7 +6,7 @@
 // when the server crashes mid-execution, because Obelisk replays the execution
 // log on restart and continues from the last completed step.
 import { agent } from "demo:fly-agent/workflow";
-import * as apps from "obelisk-flyio:activity-fly-http/apps@1.0.0-beta";
+import * as apps from "demo:fly-agent/apps";
 
 export default function run(app_name, org_slug, prompt) {
     let result = null;
