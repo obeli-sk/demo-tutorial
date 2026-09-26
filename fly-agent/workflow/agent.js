@@ -3,14 +3,14 @@
 // Inner workflow: creates a fly.io app, launches a VM that runs the agent
 // in the background and writes the result to /result.txt, then polls until
 // the file appears. Does NOT delete the app.
-import { put } from "demo:fly-agent/apps";
-import { create, get, exec } from "demo:fly-agent/machines";
+import * as apps from "demo:fly-agent/apps";
+import * as machines from "demo:fly-agent/machines";
 import * as obelisk from "obelisk:workflow@1.0.0";
 
 export default function agent(app_name, org_slug, prompt) {
     // Step 1: Create the fly.io app.
     console.log(`Creating app: ${app_name}`);
-    put(org_slug, app_name);
+    apps.put(org_slug, app_name);
 
     // Step 2: Launch a VM.
     // The init command runs the agent in the background and writes the result
@@ -18,7 +18,7 @@ export default function agent(app_name, org_slug, prompt) {
     // read the file via exec.
     // Replace the backgrounded command with your actual agent entrypoint.
     console.log("Launching VM");
-    const machine_id = create(
+    const machine_id = machines.create(
         app_name,
         "agent-vm",
         JSON.stringify({
@@ -50,7 +50,7 @@ export default function agent(app_name, org_slug, prompt) {
     // Step 3: Poll until the VM reaches the 'started' state.
     let started = false;
     for (let i = 0; i < 20; i++) {
-        const machine = get(app_name, machine_id);
+        const machine = machines.get(app_name, machine_id);
         if (machine !== null && machine.state === "started") { started = true; break; }
         console.log(`VM state: ${machine ? machine.state : "unknown"}, retrying in 3s`);
         obelisk.sleep({ seconds: 3 });
@@ -62,7 +62,7 @@ export default function agent(app_name, org_slug, prompt) {
     // Throws if the VM becomes unreachable (e.g. stopped externally).
     let output = null;
     for (let i = 0; i < 30; i++) {
-        const cat = exec(app_name, machine_id, ["cat", "/result.txt"], 10);
+        const cat = machines.exec(app_name, machine_id, ["cat", "/result.txt"], 10);
         if (cat.exit_code === 0) {
             output = (cat.stdout || "").trim();
             break;
