@@ -1,12 +1,75 @@
-# Fly.io HTTP activity — a pre-built Rust/WASM component downloaded from the registry.
-# No compilation step required. Requires FLY_API_TOKEN to be set in the environment.
-[[activity_wasm]]
-name = "activity_fly_http"
-location = "oci://docker.io/getobelisk/components_fly_activity_fly_http:2026-03-31@sha256:cc831dc0cfeecf267c67c0340aa5e3de511ff71d5978a3225e837de184635de3"
+[[activity_js]]
+name = "apps_put"
+location = "activity/apps-put.js"
+ffqn = "demo:fly-agent/apps.put"
+params = [{ name = "org-slug", type = "string" }, { name = "app-name", type = "string" }]
+return_type = "result<record { name: string, id: string }, string>"
 exec.lock_expiry.seconds = 15
-[[activity_wasm.allowed_host]]
+[[activity_js.allowed_host]]
 pattern = "https://api.machines.dev"
-methods = "*"
+methods = ["GET", "POST"]
+secrets = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+[[activity_js]]
+name = "apps_delete"
+location = "activity/apps-delete.js"
+ffqn = "demo:fly-agent/apps.delete"
+params = [{ name = "app-name", type = "string" }, { name = "force", type = "bool" }]
+return_type = "result<_, string>"
+exec.lock_expiry.seconds = 15
+[[activity_js.allowed_host]]
+pattern = "https://api.machines.dev"
+methods = ["DELETE"]
+secrets = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+[[activity_js]]
+name = "machines_create"
+location = "activity/machines-create.js"
+ffqn = "demo:fly-agent/machines.create"
+params = [
+  { name = "app-name", type = "string" },
+  { name = "machine-name", type = "string" },
+  { name = "machine-config-json", type = "string" },
+  { name = "region", type = "string" },
+]
+return_type = "result<string, string>"
+exec.lock_expiry.seconds = 15
+[[activity_js.allowed_host]]
+pattern = "https://api.machines.dev"
+methods = ["POST"]
+secrets = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+[[activity_js]]
+name = "machines_get"
+location = "activity/machines-get.js"
+ffqn = "demo:fly-agent/machines.get"
+params = [{ name = "app-name", type = "string" }, { name = "machine-id", type = "string" }]
+return_type = "result<option<record { state: string }>, string>"
+exec.lock_expiry.seconds = 15
+[[activity_js.allowed_host]]
+pattern = "https://api.machines.dev"
+methods = ["GET"]
+secrets = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+[[activity_js]]
+name = "machines_exec"
+location = "activity/machines-exec.js"
+ffqn = "demo:fly-agent/machines.exec"
+params = [
+  { name = "app-name", type = "string" },
+  { name = "machine-id", type = "string" },
+  { name = "command", type = "list<string>" },
+  { name = "timeout-secs", type = "u16" },
+]
+return_type = "result<record { exit-code: option<s32>, exit-signal: option<s32>, stderr: option<string>, stdout: option<string> }, string>"
+exec.lock_expiry.seconds = 15
+[[activity_js.allowed_host]]
+pattern = "https://api.machines.dev"
+methods = ["POST"]
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 

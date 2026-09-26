@@ -3,8 +3,8 @@
 // Inner workflow: creates a fly.io app, launches a VM that runs the agent
 // in the background and writes the result to /result.txt, then polls until
 // the file appears. Does NOT delete the app.
-import * as apps from "obelisk-flyio:activity-fly-http/apps@1.0.0-beta";
-import * as machines from "obelisk-flyio:activity-fly-http/machines@1.0.0-beta";
+import * as apps from "demo:fly-agent/apps";
+import * as machines from "demo:fly-agent/machines";
 import * as obelisk from "obelisk:workflow@1.0.0";
 
 export default function agent(app_name, org_slug, prompt) {
@@ -21,7 +21,7 @@ export default function agent(app_name, org_slug, prompt) {
     const machine_id = machines.create(
         app_name,
         "agent-vm",
-        {
+        JSON.stringify({
             image: "alpine:3.21",
             guest: { cpu_kind: "shared", cpus: 1, memory_mb: 256, kernel_args: null },
             auto_destroy: null,
@@ -42,7 +42,7 @@ export default function agent(app_name, org_slug, prompt) {
             mounts: null,
             services: null,
             files: null
-        },
+        }),
         "ams"
     );
     console.log(`VM created: ${machine_id}`);
@@ -62,7 +62,7 @@ export default function agent(app_name, org_slug, prompt) {
     // Throws if the VM becomes unreachable (e.g. stopped externally).
     let output = null;
     for (let i = 0; i < 30; i++) {
-        const cat = machines.exec(app_name, machine_id, ["cat", "/result.txt"], { timeout_secs: 10, stdin: null });
+        const cat = machines.exec(app_name, machine_id, ["cat", "/result.txt"], 10);
         if (cat.exit_code === 0) {
             output = (cat.stdout || "").trim();
             break;
