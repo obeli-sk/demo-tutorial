@@ -12,6 +12,7 @@ each driving a simple `step` activity.
 No build step required. Just install [Obelisk](https://obeli.sk/install/) and run:
 
 ```sh
+export OBELISK_API_TOKEN=$(obelisk generate token)
 obelisk server run --server-config server.toml --app-config app.toml --deployment deployment.toml
 ```
 
@@ -29,43 +30,52 @@ curl http://localhost:9090/parallel
 
 ## Inspecting executions
 
+The API port requires a token. The server above accepts the `OBELISK_API_TOKEN` exported before it
+started; export the same value in the shell you query from.
+
 List top-level executions (one per webhook call):
 
 ```sh
-curl -s "http://localhost:5005/v1/executions"
+export OBELISK_API_AUTH="Authorization: Bearer $OBELISK_API_TOKEN"
+curl -s -H "$OBELISK_API_AUTH" "http://localhost:5005/v1/executions"
 ```
 
-```
-E_01KN209P2PCVPGAPRC3DBAC92C  Finished(ok)  wasi:http/incoming-handler.handle  2026-03-31 13:11:01 UTC
-E_01KN208SQDTVW4ECBT1DPHAD03  Finished(ok)  wasi:http/incoming-handler.handle  2026-03-31 13:10:32 UTC
+```json
+[
+  {
+    "execution_id": "E_01KN209P2PCVPGAPRC3DBAC92C",
+    "ffqn": "wasi:http/incoming-handler.handle",
+    "pending_state": { "status": "finished", "result_kind": "ok", ... },
+    "created_at": "2026-03-31T13:11:01.541897881Z",
+    ...
+  }
+]
 ```
 
-Each line is: execution ID, state, FFQN (all webhooks use `wasi:http/incoming-handler.handle`), and creation time.
+Each entry has the execution ID, the FFQN (all webhooks use `wasi:http/incoming-handler.handle`),
+its state, and its creation time.
 
 Fetch logs for a webhook execution (includes its `console.log` output):
 
 ```sh
 EXECUTION_ID=E_01KN209P2PCVPGAPRC3DBAC92C
-curl -s "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs"
+curl -s -H "$OBELISK_API_AUTH" "http://localhost:5005/v1/executions/${EXECUTION_ID}/logs"
 ```
 
-To see the child executions spawned by a webhook — the workflow and its activities — use
+To see the child executions spawned by a webhook, the workflow and its activities, use
 `show_derived=true`. Narrow to tutorial executions with `ffqn_prefix`:
 
 ```sh
-curl -s "http://localhost:5005/v1/executions?show_derived=true&ffqn_prefix=tutorial:demo"
+curl -s -H "$OBELISK_API_AUTH" "http://localhost:5005/v1/executions?show_derived=true&ffqn_prefix=tutorial:demo"
 ```
 
-```
-E_01KN209P2PCVPGAPRC3DBAC92C.o:1_1         Finished(ok)  tutorial:demo/workflow.serial   2026-03-31 13:11:01 UTC
-E_01KN209P2PCVPGAPRC3DBAC92C.o:1_1.o:2-step_1  Finished(ok)  tutorial:demo/activity.step 2026-03-31 13:11:01 UTC
-...
-```
+The CLI reads the same token, so `obelisk execution list` prints a compact summary.
 
 Then fetch logs for any individual execution by its ID. `console.log` calls in workflows
 and activities both appear as log entries.
 
-Open the **Web UI** at http://localhost:8080 for a visual trace of each execution.
+Open the **Web UI** at http://localhost:8080 for a visual trace of each execution. When it asks
+for authentication, paste the value of `$OBELISK_API_TOKEN`.
 Click an execution and enable **Autoload children** to see the full hierarchy
 of webhook → workflow → activities, with timestamps and structured log entries.
 
