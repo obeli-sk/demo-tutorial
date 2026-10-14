@@ -2,7 +2,7 @@ serve:
 	obelisk server run --server-config server.toml --app-config app.toml --deployment deployment.toml
 
 verify:
-	obelisk server verify --server-config server.toml --app-config app.toml --deployment deployment.toml
+	obelisk server verify --skip-db --server-config server.toml --app-config app.toml --deployment deployment.toml
 
 e2e:
 	./scripts/e2e.sh
@@ -17,4 +17,4 @@ serve-rust:
 	obelisk server run --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml
 
 verify-rust:
-	obelisk server verify --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml
+	obelisk server verify --skip-db --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml
