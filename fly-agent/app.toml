@@ -4,7 +4,8 @@ app_name = "demo-tutorial-fly-agent"
 FLY_API_TOKEN = {}
 
 [[outbound_http.allowed_host]]
-pattern = "https://api.machines.dev"
+url_prefix = "https://api.machines.dev/v1"
 methods = ["GET", "POST", "DELETE"]
+url_regex_suffix = "/apps(/.*)?$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]

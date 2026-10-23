@@ -42,8 +42,10 @@ The inner `agent` workflow fails; the outer `run` workflow catches the error and
 app automatically.
 
 The Fly activities use `FLY_API_TOKEN` only as an outbound HTTP placeholder. Obelisk substitutes
-the secret in the `Authorization` header for the approved Fly host; the JS activity cannot read the
-plaintext token.
+the secret in the `Authorization` header only for approved Fly API requests; the JS activity cannot
+read the plaintext token. Each activity is allowlisted with
+`url_prefix = "https://api.machines.dev/v1"` and a `url_regex_suffix` that admits only the method
+and endpoint it calls.
 
 Run the API behavior tests with `node --test activity/fly-api.test.mjs`. They mock Fly HTTP calls and
 do not create any Fly resources.

@@ -6,8 +6,16 @@ params = [{ name = "org-slug", type = "string" }, { name = "app-name", type = "s
 return_type = "result<record { name: string, id: string }, string>"
 exec.lock_expiry.seconds = 15
 [[activity_js.allowed_host]]
-pattern = "https://api.machines.dev"
-methods = ["GET", "POST"]
+url_prefix = "https://api.machines.dev/v1"
+methods = ["POST"]
+url_regex_suffix = "/apps$"
+secrets = ["FLY_API_TOKEN"]
+replace_in = ["headers"]
+
+[[activity_js.allowed_host]]
+url_prefix = "https://api.machines.dev/v1"
+methods = ["GET"]
+url_regex_suffix = "/apps/[A-Za-z0-9_-]+$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 
@@ -19,8 +27,9 @@ params = [{ name = "app-name", type = "string" }, { name = "force", type = "bool
 return_type = "result<_, string>"
 exec.lock_expiry.seconds = 15
 [[activity_js.allowed_host]]
-pattern = "https://api.machines.dev"
+url_prefix = "https://api.machines.dev/v1"
 methods = ["DELETE"]
+url_regex_suffix = "/apps/[A-Za-z0-9_-]+$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 
@@ -37,8 +46,9 @@ params = [
 return_type = "result<string, string>"
 exec.lock_expiry.seconds = 15
 [[activity_js.allowed_host]]
-pattern = "https://api.machines.dev"
+url_prefix = "https://api.machines.dev/v1"
 methods = ["POST"]
+url_regex_suffix = "/apps/[A-Za-z0-9_-]+/machines$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 
@@ -50,8 +60,9 @@ params = [{ name = "app-name", type = "string" }, { name = "machine-id", type = 
 return_type = "result<option<record { state: string }>, string>"
 exec.lock_expiry.seconds = 15
 [[activity_js.allowed_host]]
-pattern = "https://api.machines.dev"
+url_prefix = "https://api.machines.dev/v1"
 methods = ["GET"]
+url_regex_suffix = "/apps/[A-Za-z0-9_-]+/machines/[A-Za-z0-9_-]+$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 
@@ -68,8 +79,9 @@ params = [
 return_type = "result<record { exit-code: option<s32>, exit-signal: option<s32>, stderr: option<string>, stdout: option<string> }, string>"
 exec.lock_expiry.seconds = 15
 [[activity_js.allowed_host]]
-pattern = "https://api.machines.dev"
+url_prefix = "https://api.machines.dev/v1"
 methods = ["POST"]
+url_regex_suffix = "/apps/[A-Za-z0-9_-]+/machines/[A-Za-z0-9_-]+/exec$"
 secrets = ["FLY_API_TOKEN"]
 replace_in = ["headers"]
 
