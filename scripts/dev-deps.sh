@@ -16,4 +16,4 @@ echo "pkg-config $(pkg-config --version)" >> dev-deps.txt
 rustc --version >> dev-deps.txt
 wasm-tools --version >> dev-deps.txt
 # libc
-ldd --version | head -n 1 >> dev-deps.txt
+ldd --version | sed -n '1p' >> dev-deps.txt
