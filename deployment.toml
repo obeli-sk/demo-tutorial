@@ -25,5 +25,6 @@ return_type = "result<u32, string>"
 
 [[webhook_endpoint_js]]
 name = "webhook"
+http_server = "external"
 location = "webhook/tutorial.js"
 routes = ["/*"]
