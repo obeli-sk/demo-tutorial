@@ -1,5 +1,5 @@
 serve:
-	obelisk server run --server-config server.toml --app-config app.toml --deployment deployment.toml
+	obelisk server run --dev --server-config server.toml --app-config app.toml --deployment deployment.toml
 
 verify:
 	obelisk server verify --skip-db --server-config server.toml --app-config app.toml --deployment deployment.toml
@@ -14,7 +14,7 @@ build-rust:
 	(cd rust/webhook-tutorial && env -u CARGO_TARGET_DIR cargo build --profile=webhook)
 
 serve-rust:
-	obelisk server run --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml
+	obelisk server run --dev --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml
 
 verify-rust:
 	obelisk server verify --skip-db --server-config rust/server.toml --app-config rust/app.toml --deployment rust/deployment.toml

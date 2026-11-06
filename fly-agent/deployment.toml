@@ -114,5 +114,6 @@ return_type = "result<string, string>"
 # Webhook: HTTP entry point for triggering the saga.
 [[webhook_endpoint_js]]
 name = "webhook"
+http_server = "internal"
 location = "webhook/fly-agent.js"
 routes = [{ methods = ["GET"], route = "/run/:org-slug/:app-name/:prompt" }]

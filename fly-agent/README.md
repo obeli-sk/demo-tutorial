@@ -17,8 +17,13 @@ export FLY_API_TOKEN=your_token_here
 ## Run
 
 ```sh
-obelisk server run --app-config app.toml --deployment deployment.toml
+obelisk server run --dev --app-config app.toml --deployment deployment.toml
 ```
+
+The resource-creating endpoint uses `internal`. Local `--dev` permits access
+without credentials; keep the listener on localhost. Hosted instances require
+platform sign-in at `https://internal--<app>.<domain>` and leave `external`
+closed. Choose an app name of at most 20 characters before deploying to Obelisk Cloud.
 
 Trigger the saga with your actual organization slug and a globally unique app name. The `personal`
 alias is unsuitable here because Fly returns the real slug on the idempotency check after a retry.
@@ -26,7 +31,7 @@ alias is unsuitable here because Fly returns the real slug on the idempotency ch
 ```sh
 ORG_SLUG=your-org-slug
 APP=my-fly-agent-$(date +%s)
-curl -v "http://localhost:9090/run/${ORG_SLUG}/${APP}/what-is-42"
+curl -v "http://localhost:9091/run/${ORG_SLUG}/${APP}/what-is-42"
 ```
 
 ## Saga Recovery Demo

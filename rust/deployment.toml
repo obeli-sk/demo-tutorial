@@ -10,6 +10,7 @@ backtrace.sources = {".../src/lib.rs" = "workflow-tutorial/src/lib.rs"}
 
 [[webhook_endpoint_wasm]]
 name = "webhook_tutorial"
+http_server = "external"
 location = "target/wasm32-wasip2/webhook/webhook_tutorial.wasm"
 routes = ["/*"]
 backtrace.sources = {".../src/lib.rs" = "webhook-tutorial/src/lib.rs"}
