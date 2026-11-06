@@ -3,7 +3,7 @@
 // Route: /run/:org-slug/:app-name/:prompt
 //
 // Usage:
-//   curl http://localhost:9090/run/personal/my-unique-app/what-is-42
+//   curl "$INTERNAL_BASE_URL/run/personal/my-unique-app/what-is-42"
 import { run } from "demo:fly-agent/workflow";
 import * as obelisk from "obelisk:webhook@1.0.0";
 
