@@ -31,7 +31,7 @@ alias is unsuitable here because Fly returns the real slug on the idempotency ch
 ```sh
 ORG_SLUG=your-org-slug
 APP=my-fly-agent-$(date +%s)
-curl -v "http://localhost:9091/run/${ORG_SLUG}/${APP}/what-is-42"
+curl -v "${INTERNAL_BASE_URL:?Set the configured internal URL}/run/${ORG_SLUG}/${APP}/what-is-42"
 ```
 
 ## Saga Recovery Demo
